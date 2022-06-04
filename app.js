@@ -4,6 +4,7 @@ require('./config/firebaseConfig');
 const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');
+const cors = require('cors');
 
 const router = require('./routes/router');
 
@@ -12,6 +13,12 @@ const { connectDB } = require('./config/dbConfig');
 
 const app = express();
 connectDB();
+
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+  }),
+);
 
 app.use(logger('dev'));
 app.use(express.json());
