@@ -8,8 +8,10 @@ const logger = require('morgan');
 const router = require('./routes/router');
 
 const authentication = require('./middleware/authentication');
+const { connectDB } = require('./config/dbConfig');
 
 const app = express();
+connectDB();
 
 app.use(logger('dev'));
 app.use(express.json());
