@@ -12,11 +12,12 @@ const languageRecordSchema = new mongoose.Schema(
 
 const userSchema = new mongoose.Schema(
   {
+    _id: String,
     email: mongoose.SchemaTypes.Email,
     name: String,
-    hiscore: Number,
-    soundEffects: Boolean,
-    selectedLanguage: String,
+    hiscore: { type: Number, default: 0 },
+    soundEffects: { type: Boolean, default: true },
+    selectedLanguage: { type: String, default: 'c' },
     languageRecord: [languageRecordSchema],
   },
   { timestamps: true },
