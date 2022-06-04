@@ -1,8 +1,9 @@
+require('dotenv').config();
+require('./config/firebaseConfig');
+
 const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');
-
-require('dotenv').config();
 
 const indexRouter = require('./routes/index');
 
