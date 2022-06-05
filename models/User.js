@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
     name: String,
     hiscore: { type: Number, default: 0 },
     soundEffects: { type: Boolean, default: true },
-    selectedLanguage: { type: String, default: 'c' },
+    selectedLanguage: { type: String, default: 'C' },
     languageRecord: [languageRecordSchema],
   },
   { timestamps: true },
