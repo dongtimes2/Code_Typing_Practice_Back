@@ -1,15 +1,15 @@
-const admin = require('../config/firebaseConfig');
+const firebase = require('firebase-admin');
 
 const decodeToken = async (req, res, next) => {
-  if (req.headers?.authorization?.startsWith('Bearer')[1]) {
-    const token = req.headers.authorization.split(' ')[1];
+  const token = req.headers?.authorization;
 
+  if (String(token) !== 'undefined') {
     try {
-      const decodeToken = await admin.auth().verifyIdToken(token);
+      const result = await firebase.auth().verifyIdToken(token);
 
-      req.user = decodeToken;
+      req.user = result;
     } catch (err) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      next(err);
     }
   }
 
