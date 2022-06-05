@@ -1,5 +1,14 @@
-exports.get = (req, res, next) => {
-  res.json('users_ok');
+const { User } = require('../../models/User');
+
+exports.get = async (req, res, next) => {
+  const { uid } = req.user;
+  const userData = await User.findOne({ _id: uid }).lean();
+
+  try {
+    res.json(userData);
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.patch = (req, res, next) => {
