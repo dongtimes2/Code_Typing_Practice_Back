@@ -1,3 +1,30 @@
-exports.get = (req, res, next) => {
-  res.json(`${req.query.type}_ok`);
+const { Paragraph } = require('../../models/Paragraph');
+const { Sentence } = require('../../models/Sentence');
+const { Word } = require('../../models/Word');
+
+exports.get = async (req, res, next) => {
+  const { language } = req.params;
+  const typeOfLanguage = req.query.type;
+
+  try {
+    if (typeOfLanguage === 'word') {
+      const words = await Word.findOne(language).lean();
+
+      return res.json(words);
+    }
+
+    if (typeOfLanguage === 'sentence') {
+      const sentences = await Sentence.findOne(language).lean();
+
+      return res.json(sentences);
+    }
+
+    if (typeOfLanguage === 'paragraph') {
+      const paragraphs = await Paragraph.find({}).lean();
+
+      return res.json(paragraphs);
+    }
+  } catch (err) {
+    next(err);
+  }
 };
