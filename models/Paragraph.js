@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const paragraphSchema = new mongoose.Schema({
-  cParagraph: [String],
-  jsParagraph: [String],
-  pythonParagraph: [String],
+  C: [String],
+  JavaScript: [String],
+  Python: [String],
 });
 
 const Paragraph = mongoose.model('Paragraph', paragraphSchema);
