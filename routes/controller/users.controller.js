@@ -1,18 +1,28 @@
 const { User } = require('../../models/User');
 
 exports.get = async (req, res, next) => {
-  const { uid } = req.user;
+  const id = req.params.id;
 
   try {
-    const userData = await User.findOne({ _id: uid }).lean();
-
+    const userData = await User.findOne({ _id: id }).lean();
     res.json(userData);
   } catch (err) {
     next(err);
   }
 };
 
-exports.patch = (req, res, next) => {
+exports.patch = async (req, res, next) => {
+  const { id, selectedLanguage, soundEffects } = req.body;
+
+  await User.findByIdAndUpdate(
+    id,
+    {
+      selectedLanguage,
+      soundEffects,
+    },
+    { new: true },
+  );
+
   res.json('users_ok');
 };
 
