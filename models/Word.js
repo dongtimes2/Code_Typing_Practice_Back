@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const wordSchema = new mongoose.Schema({
-  cLanguage: [String],
-  jsLanguage: [String],
-  pythonLanguage: [String],
+  C: [String],
+  JavaScript: [String],
+  Python: [String],
 });
 
 const Word = mongoose.model('Word', wordSchema);
