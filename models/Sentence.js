@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const sentenceSchema = new mongoose.Schema({
-  cSentence: [String],
-  jsSentence: [String],
-  pythonSentence: [String],
+  C: [String],
+  JavaScript: [String],
+  Python: [String],
 });
 
 const Sentence = mongoose.model('Sentence', sentenceSchema);
