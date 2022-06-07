@@ -5,23 +5,33 @@ exports.get = async (req, res, next) => {
 
   try {
     const userData = await User.findOne({ _id: id }).lean();
+
     res.json(userData);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
 exports.patch = async (req, res, next) => {
-  const { id, selectedLanguage, soundEffects } = req.body;
+  const id = req.params.id;
+  const { selectedLanguage, soundEffects } = req.body;
 
-  await User.findByIdAndUpdate(
-    id,
-    {
-      selectedLanguage,
-      soundEffects,
-    },
-    { new: true },
-  );
+  try {
+    const result = await User.findByIdAndUpdate(
+      id,
+      {
+        selectedLanguage,
+        soundEffects,
+      },
+      { new: true },
+    );
+
+    if (!result) {
+      return next({ status: 401, message: 'Bad Request' });
+    }
+  } catch (err) {
+    return next(err);
+  }
 
   res.json('users_ok');
 };
