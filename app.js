@@ -8,7 +8,6 @@ const cors = require('cors');
 
 const router = require('./routes/router');
 
-const authentication = require('./middleware/authentication');
 const { connectDB } = require('./config/dbConfig');
 
 const app = express();
@@ -24,7 +23,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(authentication, router);
+app.use(router);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -38,6 +37,7 @@ app.use((err, req, res, next) => {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
+  console.error(err);
   res.status(err.status || 500);
   res.json('error');
 });
