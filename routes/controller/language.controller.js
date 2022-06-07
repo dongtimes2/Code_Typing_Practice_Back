@@ -6,7 +6,7 @@ exports.get = async (req, res, next) => {
   const typeOfLanguage = req.query.type;
 
   if (!['C', 'Python', 'JavaScript'].includes(req.params.language)) {
-    return next({ status: 401, message: 'Bad Request' });
+    return next({ status: 400, message: 'Bad Request' });
   }
 
   try {
@@ -23,7 +23,7 @@ exports.get = async (req, res, next) => {
 
       return res.json(paragraphs);
     } else {
-      return next({ status: 401, message: 'Bad Request' });
+      return next({ status: 400, message: 'Bad Request' });
     }
   } catch (err) {
     return next(err);

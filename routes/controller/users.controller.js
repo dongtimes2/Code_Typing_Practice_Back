@@ -27,7 +27,7 @@ exports.patch = async (req, res, next) => {
     );
 
     if (!result) {
-      return next({ status: 401, message: 'Bad Request' });
+      return next({ status: 400, message: 'Bad Request' });
     }
   } catch (err) {
     return next(err);
