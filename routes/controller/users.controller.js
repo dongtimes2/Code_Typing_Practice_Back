@@ -18,11 +18,11 @@ exports.patch = async (req, res, next) => {
   const { selectedLanguage, soundEffects } = req.body;
 
   if (!LANGUAGE_LIST.includes(selectedLanguage)) {
-    return next({ status: 400, message: 'Bad Request' });
+    return next({ status: 400, message: 'Invalid Programming Language' });
   }
 
   if (typeof soundEffects !== 'boolean') {
-    return next({ status: 400, message: 'Bad Request' });
+    return next({ status: 400, message: 'Not boolean type' });
   }
 
   try {
