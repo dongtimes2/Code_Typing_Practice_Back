@@ -7,7 +7,7 @@ exports.get = async (req, res, next) => {
   const practiceType = req.query.type;
 
   if (!LANGUAGE_LIST.includes(req.params.language)) {
-    return next({ status: 400, message: 'Bad Request' });
+    return next({ status: 400, message: 'Invalid Programming Language' });
   }
 
   try {
@@ -24,7 +24,7 @@ exports.get = async (req, res, next) => {
 
       return res.json(paragraphs);
     } else {
-      return next({ status: 400, message: 'Bad Request' });
+      return next({ status: 400, message: 'Invalid Practice Type' });
     }
   } catch (err) {
     return next(err);
