@@ -1,4 +1,5 @@
 const { User } = require('../../models/User');
+const emailTypeValidationCheck = require('../../utils/emailTypeValidationCheck');
 
 exports.post = async (req, res, next) => {
   let result = '';
@@ -11,6 +12,14 @@ exports.post = async (req, res, next) => {
 
   if (!result) {
     const { uid, email, displayName } = req.body;
+
+    if (!uid) {
+      return next({ status: 400, message: 'Missing uid' });
+    }
+
+    if (!emailTypeValidationCheck(email)) {
+      return next({ status: 400, message: 'Invalid Email Type' });
+    }
 
     try {
       const user = new User({
