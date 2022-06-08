@@ -1,4 +1,5 @@
 const { User } = require('../../models/User');
+const LANGUAGE_LIST = require('../../utils/constants').LANGUAGE_LIST;
 
 exports.get = async (req, res, next) => {
   const id = req.params.id;
@@ -15,6 +16,14 @@ exports.get = async (req, res, next) => {
 exports.patch = async (req, res, next) => {
   const id = req.params.id;
   const { selectedLanguage, soundEffects } = req.body;
+
+  if (!LANGUAGE_LIST.includes(selectedLanguage)) {
+    return next({ status: 400, message: 'Bad Request' });
+  }
+
+  if (typeof soundEffects !== 'boolean') {
+    return next({ status: 400, message: 'Bad Request' });
+  }
 
   try {
     const result = await User.findByIdAndUpdate(
