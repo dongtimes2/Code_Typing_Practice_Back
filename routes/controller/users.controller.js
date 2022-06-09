@@ -15,7 +15,7 @@ exports.get = async (req, res, next) => {
 
 exports.patch = async (req, res, next) => {
   const id = req.params.id;
-  const { selectedLanguage, soundEffects } = req.body;
+  const { selectedLanguage, soundEffects, numberProblems } = req.body;
 
   if (!LANGUAGE_LIST.includes(selectedLanguage)) {
     return next({ status: 400, message: 'Invalid Programming Language' });
@@ -31,6 +31,7 @@ exports.patch = async (req, res, next) => {
       {
         selectedLanguage,
         soundEffects,
+        numberProblems,
       },
       { new: true },
     );
