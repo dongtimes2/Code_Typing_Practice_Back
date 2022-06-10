@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 require('mongoose-type-email');
 
-const languageRecordSchema = new mongoose.Schema(
-  {
-    language: String,
-    maxTypingSpeed: Number,
-    accuracy: Number,
-  },
-  { timestamps: true },
-);
+const languageRecordSchema = new mongoose.Schema({
+  language: String,
+  typingSpeed: Number,
+  accuracy: Number,
+  time: String,
+});
 
 const userSchema = new mongoose.Schema(
   {
