@@ -6,6 +6,7 @@ const languageRecordSchema = new mongoose.Schema({
   typingSpeed: Number,
   accuracy: Number,
   time: String,
+  type: String,
 });
 
 const userSchema = new mongoose.Schema(

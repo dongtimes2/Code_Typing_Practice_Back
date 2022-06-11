@@ -66,6 +66,7 @@ exports.recordGet = async (req, res, next) => {
           typingSpeed: record.typingSpeed,
           accuracy: record.accuracy,
           time: record.time,
+          type: record.type,
         };
 
         result.push(data);
@@ -81,7 +82,7 @@ exports.recordGet = async (req, res, next) => {
 exports.recordPatch = async (req, res, next) => {
   const id = req.params.id;
   const language = req.params.language;
-  const { typingSpeed, accuracy, time } = req.body;
+  const { typingSpeed, accuracy, time, type } = req.body;
 
   if (!LANGUAGE_LIST.includes(language)) {
     return next({ status: 400, message: 'Invalid Programming Language' });
@@ -105,6 +106,7 @@ exports.recordPatch = async (req, res, next) => {
             typingSpeed,
             accuracy,
             time,
+            type,
           },
         },
       },
