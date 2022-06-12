@@ -87,7 +87,7 @@ exports.recordGet = async (req, res, next) => {
 exports.recordPatch = async (req, res, next) => {
   const id = req.params.id;
   const language = req.params.language;
-  const { typingSpeed, accuracy, time, type } = req.body;
+  const { typingSpeed, accuracy, time, type, score } = req.body;
 
   if (!LANGUAGE_LIST.includes(language)) {
     return next({ status: 400, message: 'Invalid Programming Language' });
@@ -105,10 +105,15 @@ exports.recordPatch = async (req, res, next) => {
     return next({ status: 400, message: 'accuracy is not a number type' });
   }
 
+  if (typeof score !== 'number') {
+    return next({ status: 400, message: 'score is not a number type' });
+  }
+
   try {
     const result = await User.findOneAndUpdate(
       { _id: id },
       {
+        $inc: { hiscore: score },
         $push: {
           languageRecord: {
             language,
