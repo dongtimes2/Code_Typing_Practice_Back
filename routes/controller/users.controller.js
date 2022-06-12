@@ -1,5 +1,6 @@
 const { User } = require('../../models/User');
 const LANGUAGE_LIST = require('../../utils/constants').LANGUAGE_LIST;
+const PRACTICE_TYPE = require('../../utils/constants').PRACTICE_TYPE;
 
 exports.get = async (req, res, next) => {
   const id = req.params.id;
@@ -50,6 +51,10 @@ exports.recordGet = async (req, res, next) => {
   const id = req.params.id;
   const language = req.params.language;
 
+  if (!LANGUAGE_LIST.includes(language)) {
+    return next({ status: 400, message: 'Invalid Programming Language' });
+  }
+
   try {
     const userInfomation = await User.findById(id).lean();
 
@@ -86,6 +91,10 @@ exports.recordPatch = async (req, res, next) => {
 
   if (!LANGUAGE_LIST.includes(language)) {
     return next({ status: 400, message: 'Invalid Programming Language' });
+  }
+
+  if (!PRACTICE_TYPE.includes(type)) {
+    return next({ status: 400, message: 'Invalid practice type' });
   }
 
   if (typeof typingSpeed !== 'number') {
