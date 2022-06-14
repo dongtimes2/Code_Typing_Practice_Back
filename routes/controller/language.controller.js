@@ -1,6 +1,6 @@
-const { Paragraph } = require('../../models/Paragraph');
-const { Sentence } = require('../../models/Sentence');
-const { Word } = require('../../models/Word');
+const Paragraph = require('../../models/Paragraph');
+const Sentence = require('../../models/Sentence');
+const Word = require('../../models/Word');
 const LANGUAGE_LIST = require('../../utils/constants').LANGUAGE_LIST;
 const PRACTICE_TYPE = require('../../utils/constants').PRACTICE_TYPE;
 
@@ -18,15 +18,21 @@ exports.get = async (req, res, next) => {
 
   try {
     if (practiceType === 'word') {
-      const words = await Word.find({}).lean();
+      const words = await Word.find({
+        language,
+      }).lean();
 
       return res.json(words);
     } else if (practiceType === 'sentence') {
-      const sentences = await Sentence.find({}).lean();
+      const sentences = await Sentence.find({
+        language,
+      }).lean();
 
       return res.json(sentences);
     } else if (practiceType === 'paragraph') {
-      const paragraphs = await Paragraph.find({}).lean();
+      const paragraphs = await Paragraph.find({
+        language,
+      }).lean();
 
       return res.json(paragraphs);
     } else {
