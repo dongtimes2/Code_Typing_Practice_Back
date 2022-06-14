@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
 const wordSchema = new mongoose.Schema({
-  C: [String],
-  JavaScript: [String],
-  Python: [String],
+  language: String,
+  content: String,
 });
 
 const Word = mongoose.model('Word', wordSchema);
 
-module.exports = { Word };
+module.exports = Word;

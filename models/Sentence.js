@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
 const sentenceSchema = new mongoose.Schema({
-  C: [String],
-  JavaScript: [String],
-  Python: [String],
+  language: String,
+  content: String,
 });
 
 const Sentence = mongoose.model('Sentence', sentenceSchema);
 
-module.exports = { Sentence };
+module.exports = Sentence;
