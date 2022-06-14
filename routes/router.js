@@ -10,6 +10,6 @@ const authorization = require('../middleware/authorization');
 router.use('/', index);
 router.use('/auth/login', login);
 router.use('/users', authorization, users);
-router.use('/languages', authorization, languages);
+router.use('/languages', languages);
 
 module.exports = router;
