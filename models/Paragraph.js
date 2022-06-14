@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
 const paragraphSchema = new mongoose.Schema({
-  C: [String],
-  JavaScript: [String],
-  Python: [String],
+  language: String,
+  content: String,
 });
 
 const Paragraph = mongoose.model('Paragraph', paragraphSchema);
 
-module.exports = { Paragraph };
+module.exports = Paragraph;
