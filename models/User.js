@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema(
     soundEffects: { type: Boolean, default: true },
     selectedLanguage: { type: String, default: 'C' },
     numberProblems: { type: Number, default: 10 },
+    isColorWeaknessUser: { type: Boolean, default: false },
     languageRecord: [languageRecordSchema],
   },
   { timestamps: true },
