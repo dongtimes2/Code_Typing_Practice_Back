@@ -16,14 +16,33 @@ exports.get = async (req, res, next) => {
 
 exports.patch = async (req, res, next) => {
   const id = req.params.id;
-  const { selectedLanguage, soundEffects, numberProblems } = req.body;
+  const {
+    selectedLanguage,
+    soundEffects,
+    numberProblems,
+    isColorWeaknessUser,
+  } = req.body;
 
   if (!LANGUAGE_LIST.includes(selectedLanguage)) {
     return next({ status: 400, message: 'Invalid Programming Language' });
   }
 
   if (typeof soundEffects !== 'boolean') {
-    return next({ status: 400, message: 'Not boolean type' });
+    return next({ status: 400, message: 'soundEffects is not a boolean type' });
+  }
+
+  if (typeof numberProblems !== 'number') {
+    return next({
+      status: 400,
+      message: 'numberProblems is not a number type',
+    });
+  }
+
+  if (typeof isColorWeaknessUser !== 'boolean') {
+    return next({
+      status: 400,
+      message: 'isColorWeaknessUser is not a boolean type',
+    });
   }
 
   try {
@@ -33,6 +52,7 @@ exports.patch = async (req, res, next) => {
         selectedLanguage,
         soundEffects,
         numberProblems,
+        isColorWeaknessUser,
       },
       { new: true },
     );
