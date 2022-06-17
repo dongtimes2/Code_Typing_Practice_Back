@@ -64,7 +64,6 @@ describe('유저 레코드 정보 요청 테스트1', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'Invalid Programming Language',
         );
@@ -80,7 +79,6 @@ describe('유저 레코드 정보 요청 테스트1', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include('Bad Request');
         done();
       });
@@ -145,7 +143,6 @@ describe('유저 레코드 정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'Invalid Programming Language',
         );
@@ -162,7 +159,6 @@ describe('유저 레코드 정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'Invalid practice type',
         );
@@ -179,7 +175,6 @@ describe('유저 레코드 정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'typingSpeed is not a number type',
         );
@@ -196,7 +191,6 @@ describe('유저 레코드 정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'typingSpeed is not a number type',
         );
@@ -213,7 +207,6 @@ describe('유저 레코드 정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'accuracy is not a number type',
         );
@@ -230,7 +223,6 @@ describe('유저 레코드 정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'accuracy is not a number type',
         );
@@ -252,7 +244,6 @@ describe('유저 레코드 정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'score is not a number type',
         );
@@ -274,7 +265,6 @@ describe('유저 레코드 정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'score is not a number type',
         );
@@ -296,7 +286,6 @@ describe('유저 레코드 정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include('Bad Request');
         done();
       });
@@ -315,7 +304,6 @@ describe('유저 레코드 정보 요청 테스트2', function () {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.status).to.eql(200);
         expect(res.text).to.include('record_patch_ok');
         done();
       });

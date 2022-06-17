@@ -46,7 +46,6 @@ describe('유저정보 요청 테스트1', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(401);
-        expect(JSON.parse(res.text).status).to.eql(401);
         expect(JSON.parse(res.text).message).to.include('Unauthorized');
 
         done();
@@ -61,7 +60,6 @@ describe('유저정보 요청 테스트1', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include('Invalid token');
 
         done();
@@ -123,7 +121,6 @@ describe('유저정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'Invalid Programming Language',
         );
@@ -140,7 +137,6 @@ describe('유저정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'soundEffects is not a boolean type',
         );
@@ -157,7 +153,6 @@ describe('유저정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'soundEffects is not a boolean type',
         );
@@ -178,7 +173,6 @@ describe('유저정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'numberProblems is not a number type',
         );
@@ -199,7 +193,6 @@ describe('유저정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'numberProblems is not a number type',
         );
@@ -221,7 +214,6 @@ describe('유저정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'isColorWeaknessUser is not a boolean type',
         );
@@ -243,7 +235,6 @@ describe('유저정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'isColorWeaknessUser is not a boolean type',
         );
@@ -265,7 +256,6 @@ describe('유저정보 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include('Bad Request');
         done();
       });
@@ -335,7 +325,6 @@ describe('유저정보 요청 테스트3', function () {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.status).to.eql(200);
         expect(res.text).to.include('users_ok');
         done();
       });

@@ -27,7 +27,6 @@ describe('로그인 요청 테스트1 ', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include('Missing uid');
         done();
       });
@@ -75,7 +74,6 @@ describe('로그인 요청 테스트2', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include('Invalid Email Type');
         done();
       });

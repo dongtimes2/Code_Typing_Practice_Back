@@ -26,7 +26,6 @@ describe('문제 요청 테스트', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'Invalid Programming Language',
         );
@@ -42,7 +41,6 @@ describe('문제 요청 테스트', function () {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.status).to.eql(400);
-        expect(JSON.parse(res.text).status).to.eql(400);
         expect(JSON.parse(res.text).message).to.include(
           'Invalid practice type',
         );
