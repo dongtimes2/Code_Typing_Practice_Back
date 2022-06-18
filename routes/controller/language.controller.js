@@ -35,8 +35,6 @@ exports.get = async (req, res, next) => {
       }).lean();
 
       return res.json(paragraphs);
-    } else {
-      return next({ status: 400, message: 'Invalid Practice Type' });
     }
   } catch (err) {
     return next(err);
