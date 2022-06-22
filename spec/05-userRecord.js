@@ -28,7 +28,7 @@ describe('유저 레코드 정보 요청 테스트1', function () {
     customToken = await admin.auth().createCustomToken('sample');
 
     const result = await axios({
-      url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${process.env.WEB_API_KET}`,
+      url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${process.env.WEB_API_KEY}`,
       method: 'post',
       data: {
         token: customToken,
@@ -107,7 +107,7 @@ describe('유저 레코드 정보 요청 테스트2', function () {
     customToken = await admin.auth().createCustomToken('sample');
 
     const result = await axios({
-      url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${process.env.WEB_API_KET}`,
+      url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${process.env.WEB_API_KEY}`,
       method: 'post',
       data: {
         token: customToken,
