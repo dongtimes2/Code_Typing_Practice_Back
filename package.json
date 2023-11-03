@@ -1,11 +1,12 @@
 {
-  "name": "backend",
+  "name": "code_typing_practice_back",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "test": "mocha spec --sort --exit"
+    "test": "mocha spec --sort --exit",
+    "prepare": "husky install"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -19,12 +20,15 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.2.0",
+    "@commitlint/config-conventional": "^18.1.0",
     "axios": "^0.27.2",
     "chai": "^4.3.6",
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.0",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.16",
     "prettier": "2.6.2",
