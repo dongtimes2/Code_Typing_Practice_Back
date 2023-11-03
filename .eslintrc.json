@@ -4,30 +4,29 @@
     "es2021": true,
     "node": true
   },
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "extends": ["eslint:recommended", "prettier"],
   "parserOptions": {
     "ecmaVersion": "latest"
   },
-  "plugins": ["prefer-arrow"],
+  "plugins": ["import"],
   "rules": {
-    "indent": ["error", 2, { "SwitchCase": 1 }],
-    "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
-    "semi": ["error", "always"],
-    "no-var": ["error"],
-    "brace-style": ["error", "1tbs"],
-    "no-unused-vars": ["off"],
-    "arrow-spacing": ["error"],
-    "eol-last": ["error"],
-    "prefer-arrow/prefer-arrow-functions": [
-      "warn",
+    "no-useless-catch": "off",
+    "no-unused-vars": "off",
+    "import/order": [
+      "error",
       {
-        "disallowPrototype": true,
-        "singleReturnOnly": false,
-        "classPropertiesAllowed": false
+        "newlines-between": "always",
+        "groups": [
+          ["builtin", "external"],
+          "internal",
+          ["parent", "sibling", "index"],
+          "type"
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
       }
-    ],
-    "prettier/prettier": ["error"],
-    "comma-dangle": ["error", "always-multiline"]
+    ]
   }
 }
