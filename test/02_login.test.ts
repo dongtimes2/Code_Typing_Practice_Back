@@ -1,10 +1,7 @@
-const request = require('supertest');
+import request from 'supertest';
 
-const app = require('../app');
-const {
-  connectTestDB,
-  disconnectTestDB,
-} = require('../utils/test_utils/testdb');
+import app from '../app';
+import { connectTestDB, disconnectTestDB } from '../utils/test_utils/testdb.js';
 
 beforeEach(async () => {
   await connectTestDB();

@@ -1,10 +1,10 @@
-const createError = require('http-errors');
-const { MongoMemoryServer } = require('mongodb-memory-server');
-const mongoose = require('mongoose');
+import createError from 'http-errors';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import mongoose from 'mongoose';
 
-let mongoServer;
+let mongoServer: MongoMemoryServer;
 
-const connectTestDB = async () => {
+export const connectTestDB = async () => {
   try {
     mongoServer = await MongoMemoryServer.create();
     const uri = mongoServer.getUri();
@@ -14,7 +14,7 @@ const connectTestDB = async () => {
   }
 };
 
-const disconnectTestDB = async () => {
+export const disconnectTestDB = async () => {
   try {
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
@@ -22,9 +22,4 @@ const disconnectTestDB = async () => {
   } catch (error) {
     throw createError(500, 'Test DB disconnection error!');
   }
-};
-
-module.exports = {
-  connectTestDB,
-  disconnectTestDB,
 };

@@ -1,6 +1,6 @@
-const request = require('supertest');
+import request from 'supertest';
 
-const app = require('../app');
+import app from '../app';
 
 describe('기본 연결 테스트', () => {
   test('서버와 연결되어야 합니다', (done) => {
