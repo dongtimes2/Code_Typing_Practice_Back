@@ -17,6 +17,13 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["import", "@typescript-eslint"],
+  "ignorePatterns": [
+    "node_modules/*",
+    "jest.config.ts",
+    "dist/*",
+    "coverage/*",
+    "test/*"
+  ],
   "rules": {
     "@typescript-eslint/no-unused-vars": "off",
     "no-useless-catch": "off",
