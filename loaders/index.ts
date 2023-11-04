@@ -1,4 +1,4 @@
-const { connectDB } = require('./db');
+import { connectDB } from './db.js';
 
 const loaders = async () => {
   try {
@@ -8,4 +8,4 @@ const loaders = async () => {
   }
 };
 
-module.exports = loaders;
+export default loaders;
