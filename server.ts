@@ -1,5 +1,5 @@
-const app = require('./app');
-const loaders = require('./loaders');
+import app from './app.js';
+import loaders from './loaders/index.js';
 
 const startServer = async () => {
   await loaders();

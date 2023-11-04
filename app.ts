@@ -1,14 +1,17 @@
-require('dotenv').config();
-require('./config/firebaseConfig');
+import cors from 'cors';
+import express, {
+  Application,
+  Request,
+  Response,
+  NextFunction,
+  ErrorRequestHandler,
+} from 'express';
+import createError from 'http-errors';
+import morgan from 'morgan';
 
-const cors = require('cors');
-const express = require('express');
-const createError = require('http-errors');
-const morgan = require('morgan');
+import router from './routes/router.js';
 
-const router = require('./routes/router');
-
-const app = express();
+const app: Application = express();
 
 app.set('port', process.env.PORT || 8000);
 app.use(
@@ -27,16 +30,16 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(router);
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   next(createError(404));
 });
 
-app.use((err, req, res, next) => {
+app.use(((err, req, res, next) => {
   if (err.status) {
     res.status(err.status).json({ message: err.message });
   } else {
     res.status(500).json({ message: 'internal error' });
   }
-});
+}) as ErrorRequestHandler);
 
-module.exports = app;
+export default app;
