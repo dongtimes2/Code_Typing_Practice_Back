@@ -1,18 +1,20 @@
-const Paragraph = require('../../models/Paragraph');
-const Sentence = require('../../models/Sentence');
-const Word = require('../../models/Word');
-const LANGUAGE_LIST = require('../../utils/constants').LANGUAGE_LIST;
-const PRACTICE_TYPE = require('../../utils/constants').PRACTICE_TYPE;
+import { NextFunction, Request, Response } from 'express';
 
-exports.get = async (req, res, next) => {
-  const practiceType = req.query.type;
+import { LANGUAGE_LIST } from '../../constants/language.js';
+import { PRACTICE_TYPE_LIST } from '../../constants/practiceType.js';
+import { Paragraph } from '../../models/Paragraph.js';
+import { Sentence } from '../../models/Sentence.js';
+import { Word } from '../../models/Word.js';
+
+export const get = async (req: Request, res: Response, next: NextFunction) => {
+  const practiceType = req.query.type as string;
   const language = req.params.language;
 
   if (!LANGUAGE_LIST.includes(language)) {
     return next({ status: 400, message: 'Invalid Programming Language' });
   }
 
-  if (!PRACTICE_TYPE.includes(practiceType)) {
+  if (!PRACTICE_TYPE_LIST.includes(practiceType)) {
     return next({ status: 400, message: 'Invalid practice type' });
   }
 

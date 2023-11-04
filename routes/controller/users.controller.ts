@@ -1,8 +1,10 @@
-const { User } = require('../../models/User');
-const LANGUAGE_LIST = require('../../utils/constants').LANGUAGE_LIST;
-const PRACTICE_TYPE = require('../../utils/constants').PRACTICE_TYPE;
+import { NextFunction, Request, Response } from 'express';
 
-exports.get = async (req, res, next) => {
+import { LANGUAGE_LIST } from '../../constants/language.js';
+import { PRACTICE_TYPE_LIST } from '../../constants/practiceType.js';
+import { User } from '../../models/User.js';
+
+export const get = async (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id;
 
   try {
@@ -14,7 +16,11 @@ exports.get = async (req, res, next) => {
   }
 };
 
-exports.patch = async (req, res, next) => {
+export const patch = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const id = req.params.id;
   const {
     selectedLanguage,
@@ -67,7 +73,11 @@ exports.patch = async (req, res, next) => {
   res.json('users_ok');
 };
 
-exports.recordGet = async (req, res, next) => {
+export const recordGet = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const id = req.params.id;
   const language = req.params.language;
 
@@ -104,7 +114,11 @@ exports.recordGet = async (req, res, next) => {
   }
 };
 
-exports.recordPatch = async (req, res, next) => {
+export const recordPatch = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const id = req.params.id;
   const language = req.params.language;
   const { typingSpeed, accuracy, time, type, score } = req.body;
@@ -113,7 +127,7 @@ exports.recordPatch = async (req, res, next) => {
     return next({ status: 400, message: 'Invalid Programming Language' });
   }
 
-  if (!PRACTICE_TYPE.includes(type)) {
+  if (!PRACTICE_TYPE_LIST.includes(type)) {
     return next({ status: 400, message: 'Invalid practice type' });
   }
 

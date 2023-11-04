@@ -1,8 +1,10 @@
-const { User } = require('../../models/User');
-const emailTypeValidationCheck = require('../../utils/emailTypeValidationCheck');
+import { NextFunction, Request, Response } from 'express';
 
-exports.post = async (req, res, next) => {
-  let result = '';
+import { User } from '../../models/User.js';
+import { emailTypeValidationCheck } from '../../utils/emailTypeValidationCheck.js';
+
+export const post = async (req: Request, res: Response, next: NextFunction) => {
+  let result: string | null = '';
 
   try {
     result = await User.findById(req.body.uid);
