@@ -2,9 +2,11 @@
   "name": "code_typing_practice_back",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "NODE_ENV=production node server.js",
-    "dev": "NODE_ENV=development nodemon server.js",
+    "build": "tsc",
+    "start": "NODE_ENV=production node ./dist/server.js",
+    "dev": "NODE_ENV=development tsc-watch --onSuccess \"node ./dist/server.js\"",
     "test": "jest -i",
     "coverage": "jest --coverage",
     "prepare": "husky install",
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^18.1.0",
+    "@types/node": "^20.8.10",
     "axios": "^1.6.0",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
@@ -34,6 +37,8 @@
     "mongodb-memory-server": "^9.0.1",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
-    "supertest": "^6.2.3"
+    "supertest": "^6.2.3",
+    "tsc-watch": "^6.0.4",
+    "typescript": "^5.2.2"
   }
 }
