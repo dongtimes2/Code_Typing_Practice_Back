@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-require('mongoose-type-email');
+import mongoose from 'mongoose';
 
 const languageRecordSchema = new mongoose.Schema({
   language: String,
@@ -12,7 +11,7 @@ const languageRecordSchema = new mongoose.Schema({
 const userSchema = new mongoose.Schema(
   {
     _id: String,
-    email: mongoose.SchemaTypes.Email,
+    email: String,
     name: String,
     hiscore: { type: Number, default: 0 },
     soundEffects: { type: Boolean, default: true },
@@ -24,7 +23,8 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-const User = mongoose.model('User', userSchema);
-const LanguageRecord = mongoose.model('LanguageRecord', languageRecordSchema);
-
-module.exports = { User, LanguageRecord };
+export const User = mongoose.model('User', userSchema);
+export const LanguageRecord = mongoose.model(
+  'LanguageRecord',
+  languageRecordSchema,
+);
