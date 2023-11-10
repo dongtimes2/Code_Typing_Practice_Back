@@ -23,3 +23,11 @@ export const disconnectTestDB = async () => {
     throw createError(500, 'Test DB disconnection error!');
   }
 };
+
+export const resetTestDB = async () => {
+  try {
+    await mongoose.connection.dropDatabase();
+  } catch (error) {
+    throw createError(500, 'Test DB reset error!');
+  }
+};
