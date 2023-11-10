@@ -9,14 +9,15 @@ import express, {
 import createError from 'http-errors';
 import morgan from 'morgan';
 
+import { CLIENT_URL, PORT } from './config/env.js';
 import router from './routes/router.js';
 
 const app: Application = express();
 
-app.set('port', process.env.PORT || 8000);
+app.set('port', PORT || 8000);
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: CLIENT_URL,
   }),
 );
 app.use(express.json());
