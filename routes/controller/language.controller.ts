@@ -2,12 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
 import { SERVER_URL } from '../../config/env.js';
-import { LANGUAGE_LIST } from '../../constants/language.js';
-import { PRACTICE_TYPE_LIST } from '../../constants/practiceType.js';
 import { Language } from '../../models/Language.js';
-import { Paragraph } from '../../models/Paragraph.js';
-import { Sentence } from '../../models/Sentence.js';
-import { Word } from '../../models/Word.js';
 import { ILanguage } from '../../types/language.js';
 
 export const getLanguagesList = async (
@@ -58,42 +53,5 @@ export const postLanguageInfo = async (
     res.status(201).json({ message: 'Data is successfully saved' });
   } catch (error) {
     return next(error);
-  }
-};
-
-export const get = async (req: Request, res: Response, next: NextFunction) => {
-  const practiceType = req.query.type as string;
-  const language = req.params.language;
-
-  if (!LANGUAGE_LIST.includes(language)) {
-    return next({ status: 400, message: 'Invalid Programming Language' });
-  }
-
-  if (!PRACTICE_TYPE_LIST.includes(practiceType)) {
-    return next({ status: 400, message: 'Invalid practice type' });
-  }
-
-  try {
-    if (practiceType === 'word') {
-      const words = await Word.find({
-        language,
-      }).lean();
-
-      return res.json(words);
-    } else if (practiceType === 'sentence') {
-      const sentences = await Sentence.find({
-        language,
-      }).lean();
-
-      return res.json(sentences);
-    } else if (practiceType === 'paragraph') {
-      const paragraphs = await Paragraph.find({
-        language,
-      }).lean();
-
-      return res.json(paragraphs);
-    }
-  } catch (err) {
-    return next(err);
   }
 };
