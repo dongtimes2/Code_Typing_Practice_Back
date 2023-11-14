@@ -1,40 +1,52 @@
+import axios from 'axios';
 import { NextFunction, Request, Response } from 'express';
 
+import {
+  NAVER_LOGIN_CLIENT_ID,
+  NAVER_LOGIN_CLIENT_SECRET,
+} from '../../config/env.js';
 import { User } from '../../models/User.js';
-import { emailTypeValidationCheck } from '../../utils/emailTypeValidationCheck.js';
+import { IUser } from '../../types/user.js';
 
-export const post = async (req: Request, res: Response, next: NextFunction) => {
-  let result: string | null = '';
+export const postLogin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const state = req.body.state;
+  const code = req.body.code;
+  const grandTokenLink = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${NAVER_LOGIN_CLIENT_ID}&client_secret=${NAVER_LOGIN_CLIENT_SECRET}&code=${code}&state=${state}`;
 
   try {
-    result = await User.findById(req.body.uid);
-  } catch (err) {
-    return next(err);
-  }
+    const response = await axios.get(grandTokenLink);
+    const accessToken = response.data.access_token;
 
-  if (!result) {
-    const { uid, email, displayName } = req.body;
+    const getUserProfileLink = `https://openapi.naver.com/v1/nid/me`;
 
-    if (!uid) {
-      return next({ status: 400, message: 'Missing uid' });
-    }
+    const profile = await axios.get(getUserProfileLink, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
-    if (!emailTypeValidationCheck(email)) {
-      return next({ status: 400, message: 'Invalid Email Type' });
-    }
+    const id = profile.data.response.id;
+    const nickname = profile.data.response.nickname;
+    const profileImage = profile.data.response.profile_image;
 
-    try {
-      const user = new User({
-        _id: uid,
-        email,
-        name: displayName,
+    const user = await User.find({
+      id: id,
+    }).lean();
+
+    if (!user.length) {
+      const newUser = new User<IUser>({
+        id: id,
       });
 
-      await user.save();
-    } catch (err) {
-      return next(err);
+      await newUser.save();
     }
-  }
 
-  res.json('login_ok');
+    res.json({ nickname, profileImage });
+  } catch (error) {
+    return next(error);
+  }
 };
