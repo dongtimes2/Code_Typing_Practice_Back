@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
 
 import { SERVER_URL } from '../../config/env.js';
 import { Language } from '../../models/Language.js';
@@ -43,7 +42,7 @@ export const postLanguageInfo = async (
 
   try {
     const languageData = new Language<ILanguage>({
-      id: uuidv4(),
+      id: data.name.trim().toLowerCase(),
       name: data.name,
       description: data.description,
       imagePath: `${SERVER_URL}/svgs/${data.name}.svg`,
