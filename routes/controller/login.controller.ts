@@ -7,6 +7,7 @@ import {
 } from '../../config/env.js';
 import { User } from '../../models/User.js';
 import { IUser } from '../../types/user.js';
+import { getAccessToken, getRefreshToken } from '../../utils/token.js';
 
 export const postLogin = async (
   req: Request,
@@ -19,17 +20,17 @@ export const postLogin = async (
 
   try {
     const response = await axios.get(grandTokenLink);
-    const accessToken = response.data.access_token;
+    const naverAccessToken = response.data.access_token;
 
     const getUserProfileLink = `https://openapi.naver.com/v1/nid/me`;
 
     const profile = await axios.get(getUserProfileLink, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${naverAccessToken}`,
       },
     });
 
-    const id = profile.data.response.id;
+    const id = profile.data.response.id as string;
     const nickname = profile.data.response.nickname;
     const profileImage = profile.data.response.profile_image;
 
@@ -40,12 +41,20 @@ export const postLogin = async (
     if (!user.length) {
       const newUser = new User<IUser>({
         id: id,
+        refreshToken: '',
       });
 
       await newUser.save();
     }
 
-    res.json({ nickname, profileImage });
+    const accessToken = getAccessToken(id);
+    const refreshToken = await getRefreshToken(id);
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+    });
+    res.json({ accessToken, nickname, profileImage });
   } catch (error) {
     return next(error);
   }

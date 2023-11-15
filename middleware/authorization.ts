@@ -1,22 +1,31 @@
 import { NextFunction, Request, Response } from 'express';
-import admin from 'firebase-admin';
+
+import { verifyAccessToken } from '../utils/token.js';
 
 const authorization = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  const token = req.headers?.authorization as string;
+  const { authorization } = req.headers;
 
-  if (String(token) !== 'undefined') {
-    try {
-      await admin.auth().verifyIdToken(token);
-      return next();
-    } catch (error) {
-      return next({ status: 400, message: 'Invalid token' });
+  if (!authorization || !authorization.startsWith('Bearer ')) {
+    return next({ status: 401, message: 'Missing Access Token' });
+  }
+
+  const accessToken = authorization.split(' ')[1];
+  try {
+    const id = await verifyAccessToken(accessToken);
+    req.userId = id;
+    next();
+  } catch (error) {
+    if (error instanceof Error) {
+      if (error.message === 'expired') {
+        return next({ status: 401, message: 'Token Expired' });
+      } else {
+        return next({ status: 401, message: 'Invalid Token' });
+      }
     }
-  } else {
-    return next({ status: 401, message: 'Unauthorized' });
   }
 };
 

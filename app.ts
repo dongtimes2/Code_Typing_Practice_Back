@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, {
   Application,
@@ -18,8 +19,10 @@ app.set('port', PORT || 8000);
 app.use(
   cors({
     origin: CLIENT_URL,
+    credentials: true,
   }),
 );
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));

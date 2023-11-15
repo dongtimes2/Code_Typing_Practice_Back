@@ -10,3 +10,4 @@ export const NAVER_LOGIN_CLIENT_ID = process.env
   .NAVER_LOGIN_CLIENT_ID as string;
 export const NAVER_LOGIN_CLIENT_SECRET = process.env
   .NAVER_LOGIN_CLIENT_SECRET as string;
+export const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY as string;
