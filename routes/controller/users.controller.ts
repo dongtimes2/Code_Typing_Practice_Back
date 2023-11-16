@@ -1,171 +1,45 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { LANGUAGE_LIST } from '../../constants/language.js';
-import { PRACTICE_TYPE_LIST } from '../../constants/practiceType.js';
 import { User } from '../../models/User.js';
+import { IUserSettings } from '../../types/user.js';
 
-export const get = async (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id;
-
-  try {
-    const userData = await User.findOne({ _id: id }).lean();
-
-    res.json(userData);
-  } catch (err) {
-    return next(err);
-  }
-};
-
-export const patch = async (
+export const patchUser = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  const id = req.params.id;
-  const {
-    selectedLanguage,
-    soundEffects,
-    numberProblems,
-    isColorWeaknessUser,
-  } = req.body;
+  const id = req.userId;
+  const data: IUserSettings = req.body;
 
-  if (!LANGUAGE_LIST.includes(selectedLanguage)) {
-    return next({ status: 400, message: 'Invalid Programming Language' });
-  }
-
-  if (typeof soundEffects !== 'boolean') {
-    return next({ status: 400, message: 'soundEffects is not a boolean type' });
-  }
-
-  if (typeof numberProblems !== 'number') {
-    return next({
-      status: 400,
-      message: 'numberProblems is not a number type',
-    });
-  }
-
-  if (typeof isColorWeaknessUser !== 'boolean') {
-    return next({
-      status: 400,
-      message: 'isColorWeaknessUser is not a boolean type',
-    });
-  }
-
-  try {
-    const result = await User.findByIdAndUpdate(
-      id,
-      {
-        selectedLanguage,
-        soundEffects,
-        numberProblems,
-        isColorWeaknessUser,
-      },
-      { new: true },
-    );
-
-    if (!result) {
-      return next({ status: 400, message: 'Bad Request' });
+  if (typeof data.sound === 'boolean') {
+    try {
+      await User.findOneAndUpdate({ id }, { sound: data.sound });
+    } catch (error) {
+      return next(error);
     }
-  } catch (err) {
-    return next(err);
   }
 
-  res.json('users_ok');
-};
-
-export const recordGet = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const id = req.params.id;
-  const language = req.params.language;
-
-  if (!LANGUAGE_LIST.includes(language)) {
-    return next({ status: 400, message: 'Invalid Programming Language' });
-  }
-
-  try {
-    const userInfomation = await User.findById(id).lean();
-
-    if (!userInfomation) {
-      return next({ status: 400, message: 'Bad Request' });
+  if (typeof data.isColorWeakness === 'boolean') {
+    try {
+      await User.findOneAndUpdate(
+        { id },
+        { isColorWeakness: data.isColorWeakness },
+      );
+    } catch (error) {
+      return next(error);
     }
+  }
 
-    const totalRecords = userInfomation.languageRecord;
-    const result = [];
-
-    for (const record of totalRecords) {
-      if (record.language === language) {
-        const data = {
-          typingSpeed: record.typingSpeed,
-          accuracy: record.accuracy,
-          time: record.time,
-          type: record.type,
-        };
-
-        result.push(data);
-      }
+  if (typeof data.practiceNumber === 'number') {
+    try {
+      await User.findOneAndUpdate(
+        { id },
+        { practiceNumber: data.practiceNumber },
+      );
+    } catch (error) {
+      return next(error);
     }
-
-    res.json(result);
-  } catch (err) {
-    return next(err);
-  }
-};
-
-export const recordPatch = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const id = req.params.id;
-  const language = req.params.language;
-  const { typingSpeed, accuracy, time, type, score } = req.body;
-
-  if (!LANGUAGE_LIST.includes(language)) {
-    return next({ status: 400, message: 'Invalid Programming Language' });
   }
 
-  if (!PRACTICE_TYPE_LIST.includes(type)) {
-    return next({ status: 400, message: 'Invalid practice type' });
-  }
-
-  if (typeof typingSpeed !== 'number') {
-    return next({ status: 400, message: 'typingSpeed is not a number type' });
-  }
-
-  if (typeof accuracy !== 'number') {
-    return next({ status: 400, message: 'accuracy is not a number type' });
-  }
-
-  if (typeof score !== 'number') {
-    return next({ status: 400, message: 'score is not a number type' });
-  }
-
-  try {
-    const result = await User.findOneAndUpdate(
-      { _id: id },
-      {
-        $inc: { hiscore: score },
-        $push: {
-          languageRecord: {
-            language,
-            typingSpeed,
-            accuracy,
-            time,
-            type,
-          },
-        },
-      },
-      { new: true },
-    );
-
-    if (!result) {
-      return next({ status: 400, message: 'Bad Request' });
-    }
-  } catch (err) {
-    return next(err);
-  }
-  res.json('record_patch_ok');
+  res.status(204).json({ message: 'patch_ok' });
 };

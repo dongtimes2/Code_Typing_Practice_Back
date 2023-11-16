@@ -6,6 +6,7 @@ import login from './login.js';
 import logout from './logout.js';
 import practice from './practice.js';
 import refresh from './refresh.js';
+import users from './users.js';
 import authorization from '../middleware/authorization.js';
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.use('/auth/login', login);
 router.use('/auth/logout', authorization, logout);
 router.use('/languages', languages);
 router.use('/practice', authorization, practice);
+router.use('/users', authorization, users);
 
 export default router;
