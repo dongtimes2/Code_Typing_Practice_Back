@@ -33,15 +33,21 @@ export const postLogin = async (
     const id = profile.data.response.id as string;
     const nickname = profile.data.response.nickname;
     const profileImage = profile.data.response.profile_image;
-
-    const user = await User.find({
+    const user = await User.findOne({
       id: id,
     }).lean();
 
-    if (!user.length) {
+    const practiceNumber = user?.practiceNumber ?? 10;
+    const sound = user?.sound ?? true;
+    const isColorWeakness = user?.isColorWeakness ?? false;
+
+    if (!user) {
       const newUser = new User<IUser>({
         id: id,
         refreshToken: '',
+        practiceNumber,
+        sound,
+        isColorWeakness,
       });
 
       await newUser.save();
@@ -54,7 +60,14 @@ export const postLogin = async (
       httpOnly: true,
       secure: true,
     });
-    res.json({ accessToken, nickname, profileImage });
+    res.json({
+      accessToken,
+      nickname,
+      profileImage,
+      practiceNumber,
+      sound,
+      isColorWeakness,
+    });
   } catch (error) {
     return next(error);
   }
