@@ -7,4 +7,6 @@ export interface IUserSettings {
 export interface IUser extends IUserSettings {
   id: string;
   refreshToken: string;
+  nickname: string;
+  profileImage: string;
 }

@@ -5,6 +5,8 @@ import { IUser } from '../types/user';
 const userSchema = new Schema<IUser>({
   id: String,
   refreshToken: String,
+  nickname: String,
+  profileImage: String,
   practiceNumber: Number,
   sound: Boolean,
   isColorWeakness: Boolean,

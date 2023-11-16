@@ -31,11 +31,21 @@ export const postLogin = async (
     });
 
     const id = profile.data.response.id as string;
-    const nickname = profile.data.response.nickname;
-    const profileImage = profile.data.response.profile_image;
+    let nickname = profile.data.response.nickname;
+    let profileImage = profile.data.response.profile_image;
     const user = await User.findOne({
       id: id,
     }).lean();
+
+    if (nickname !== user?.nickname) {
+      nickname = user?.nickname ?? nickname;
+      await User.findOneAndUpdate({ id }, { nickname }).lean();
+    }
+
+    if (profileImage !== user?.profileImage) {
+      profileImage = user?.profileImage ?? profileImage;
+      await User.findOneAndUpdate({ id }, { profileImage }).lean();
+    }
 
     const practiceNumber = user?.practiceNumber ?? 10;
     const sound = user?.sound ?? true;
@@ -45,6 +55,8 @@ export const postLogin = async (
       const newUser = new User<IUser>({
         id: id,
         refreshToken: '',
+        nickname,
+        profileImage,
         practiceNumber,
         sound,
         isColorWeakness,
