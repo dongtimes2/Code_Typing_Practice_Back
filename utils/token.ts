@@ -1,5 +1,4 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { resolve } from 'path';
 
 import { TOKEN_SECRET_KEY } from '../config/env.js';
 import { User } from '../models/User.js';
