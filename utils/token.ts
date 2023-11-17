@@ -7,6 +7,15 @@ interface IDecodedToken extends JwtPayload {
   id: string;
 }
 
+// 테스트 전용 함수
+export const getExpiredAccessToken = (id: string) => {
+  const accessToken = jwt.sign({ id }, TOKEN_SECRET_KEY, {
+    expiresIn: '0.1s',
+  });
+
+  return accessToken;
+};
+
 export const getAccessToken = (id: string) => {
   const accessToken = jwt.sign({ id }, TOKEN_SECRET_KEY, {
     expiresIn: '3600s',
@@ -35,6 +44,16 @@ export const decodeAccessToken = (accessToken: string) => {
   const { id } = jwt.decode(accessToken) as IDecodedToken;
 
   return id;
+};
+
+// 테스트 전용 함수
+export const getExpiredRefreshToken = async (id: string) => {
+  const refreshToken = jwt.sign({}, TOKEN_SECRET_KEY, {
+    expiresIn: '0.1s',
+  });
+
+  await User.findOneAndUpdate({ id }, { refreshToken });
+  return refreshToken;
 };
 
 export const getRefreshToken = async (id: string) => {
