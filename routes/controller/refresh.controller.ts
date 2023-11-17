@@ -14,7 +14,7 @@ export const postRefresh = async (
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    return next({ status: 401, message: 'Unauthorized' });
+    return next({ status: 401, message: 'Missing Access Token' });
   }
 
   const accessToken = authorization.split(' ')[1];
@@ -31,7 +31,7 @@ export const postRefresh = async (
         res.clearCookie('refreshToken');
         return next({ status: 401, message: 'Refresh Token Expired' });
       } else {
-        return next({ status: 401, message: 'Refresh Invalid Token' });
+        return next({ status: 401, message: 'Invalid Refresh Token' });
       }
     }
   }
