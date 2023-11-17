@@ -16,6 +16,15 @@ export const postLogin = async (
 ) => {
   const state = req.body.state;
   const code = req.body.code;
+
+  if (!state) {
+    return next({ status: 400, message: 'Invalid State' });
+  }
+
+  if (!code) {
+    return next({ status: 400, message: 'Invalid Code' });
+  }
+
   const grandTokenLink = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${NAVER_LOGIN_CLIENT_ID}&client_secret=${NAVER_LOGIN_CLIENT_SECRET}&code=${code}&state=${state}`;
 
   try {
