@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import app from '../app';
+import app from '../app.js';
 
 describe('기본 연결 테스트', () => {
   test('서버와 연결되어야 합니다', (done) => {
