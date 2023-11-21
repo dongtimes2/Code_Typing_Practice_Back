@@ -80,6 +80,7 @@ export const postLogin = async (
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true,
+      sameSite: 'strict',
     });
     res.json({
       accessToken,
