@@ -3,7 +3,9 @@ import { NextFunction, Request, Response } from 'express';
 
 import {
   NAVER_LOGIN_CLIENT_ID,
+  NAVER_LOGIN_CLIENT_ID_DEV,
   NAVER_LOGIN_CLIENT_SECRET,
+  NAVER_LOGIN_CLIENT_SECRET_DEV,
 } from '../../config/env.js';
 import { User } from '../../models/User.js';
 import { IUser } from '../../types/user.js';
@@ -25,7 +27,12 @@ export const postLogin = async (
     return next({ status: 400, message: 'Invalid Code' });
   }
 
-  const grandTokenLink = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${NAVER_LOGIN_CLIENT_ID}&client_secret=${NAVER_LOGIN_CLIENT_SECRET}&code=${code}&state=${state}`;
+  let grandTokenLink = '';
+  if (process.env.NODE_ENV === 'development') {
+    grandTokenLink = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${NAVER_LOGIN_CLIENT_ID_DEV}&client_secret=${NAVER_LOGIN_CLIENT_SECRET_DEV}&code=${code}&state=${state}`;
+  } else if (process.env.NODE_ENV === 'production') {
+    grandTokenLink = `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${NAVER_LOGIN_CLIENT_ID}&client_secret=${NAVER_LOGIN_CLIENT_SECRET}&code=${code}&state=${state}`;
+  }
 
   try {
     const response = await axios.get(grandTokenLink);
